@@ -3,7 +3,6 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"log"
 	"os"
 	"strings"
 )
@@ -28,37 +27,30 @@ func (p Processor) Run() {
 		mappings[index] = Mapping{Col: col, Faker: faker}
 	}
 
-	fmt.Fprintln(os.Stderr, "Running...")
+	fmt.Fprintln(os.Stdout, "Running...")
 
 	iterator := Iterator{Mappings: mappings}
 
 	file, err := os.Open(p.File)
-	if err != nil {
-		log.Fatal(err)
-	}
+	check(err)
 	defer file.Close()
 
 	output, err := os.Create(p.Output)
-	if err != nil {
-		log.Fatal(err)
-	}
+	check(err)
 	defer output.Close()
 
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
 		_, err := output.WriteString(fmt.Sprintf("%s\n", iterator.ProcessLine(scanner.Text())))
-		if err != nil {
-			log.Fatal(err)
-		}
+		check(err)
 	}
 
-	if err := scanner.Err(); err != nil {
-		log.Fatal(err)
-	}
+	err = scanner.Err()
+	check(err)
 
 	output.Sync()
 
-	fmt.Fprintln(os.Stderr, "Done")
+	fmt.Fprintln(os.Stdout, "Done")
 }
 
 func getColumn(field string) string {
@@ -72,4 +64,11 @@ func getFaker(field string) string {
 	}
 
 	return Replace(field, ":(?:.*)$", "")
+}
+
+func check(e error) {
+	if e != nil {
+		fmt.Fprintf(os.Stderr, "Error: %v\n", e)
+		os.Exit(1)
+	}
 }

@@ -74,7 +74,7 @@ func (p processor) Run() {
 }
 
 func getColumn(field string) string {
-	col := Replace(field, ":(?:.*)$")
+	col := Replace(field, ":(?:.*)$", "")
 	return strings.ToLower(col)
 }
 
@@ -83,5 +83,5 @@ func getFaker(field string) string {
 		return ""
 	}
 
-	return Replace(field, ":(?:.*)$")
+	return Replace(field, ":(?:.*)$", "")
 }

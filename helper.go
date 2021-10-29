@@ -16,7 +16,7 @@ func Gsub(subject, patern string) string {
 	return match[1]
 }
 
-func Replace(subject, pattern string) string {
+func Replace(src, pattern, repl string) string {
 	re := regexp.MustCompile(pattern)
-	return re.ReplaceAllString(subject, "")
+	return re.ReplaceAllString(src, repl)
 }

@@ -8,25 +8,13 @@ import (
 	"strings"
 )
 
-type processor struct {
+type Processor struct {
 	File   string
 	Output string
 	Fields []string
 }
 
-func NewProcessor(file, output, fields string) processor {
-	if file == "" {
-		file = "./in.sql"
-	}
-
-	if output == "" {
-		output = "./out.sql"
-	}
-
-	return processor{File: file, Output: output, Fields: strings.Split(fields, ",")}
-}
-
-func (p processor) Run() {
+func (p Processor) Run() {
 	mappings := make([]Mapping, len(p.Fields))
 
 	for index, field := range p.Fields {

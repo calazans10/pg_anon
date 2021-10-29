@@ -8,11 +8,6 @@ import (
 	"strings"
 )
 
-const (
-	colPattern   = ":(?:.*)$"
-	fakerPattern = ":(?:.*)$"
-)
-
 type processor struct {
 	File   string
 	Output string
@@ -35,9 +30,9 @@ func (p processor) Run() {
 	mappings := make([]Mapping, len(p.Fields))
 
 	for index, field := range p.Fields {
-		col := getColumn(field, colPattern)
+		col := getColumn(field)
 
-		faker := getFaker(field, fakerPattern)
+		faker := getFaker(field)
 		if faker == "" {
 			faker = col
 		}
@@ -78,15 +73,15 @@ func (p processor) Run() {
 	fmt.Fprintln(os.Stderr, "Done")
 }
 
-func getColumn(line, pattern string) string {
-	col := Replace(line, pattern)
+func getColumn(field string) string {
+	col := Replace(field, ":(?:.*)$")
 	return strings.ToLower(col)
 }
 
-func getFaker(line, pattern string) string {
-	if !strings.Contains(line, ":") {
+func getFaker(field string) string {
+	if !strings.Contains(field, ":") {
 		return ""
 	}
 
-	return Replace(line, pattern)
+	return Replace(field, ":(?:.*)$")
 }

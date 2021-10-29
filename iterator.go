@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"regexp"
 	"strings"
 )
@@ -16,10 +15,6 @@ type Iterator struct {
 	table        string
 	columns      []string
 	transformers []Anonymizer
-}
-
-func (i Iterator) ToString() string {
-	return fmt.Sprintf("%+v\n", i)
 }
 
 func (i *Iterator) ProcessLine(line string) string {

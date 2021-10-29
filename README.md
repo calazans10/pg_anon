@@ -1,6 +1,6 @@
 # pg_anon
 
-This is a simple tool for anonymizing a dump file from a PostgreSQL database. The resulting dump can be loaded back into an new database using standard tools (e.g. `psql(1)`)..
+This is a simple tool for anonymizing a dump file from a PostgreSQL database. The resulting dump can be loaded back into an new database using standard tools (e.g. `psql(1)`).
 
 This is heavily inspired by [pg-anon](https://github.com/ismaelga/pg-anon).
 
